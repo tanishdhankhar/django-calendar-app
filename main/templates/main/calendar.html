@@ -7,39 +7,60 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 30px;
+            background-color: white;
+            color: black;
         }
         button {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
             margin-top: 20px;
+            background-color: white;
+            color: black;
         }
         table {
             border-collapse: collapse;
             margin: 20px auto;
+            background-color: white;
+            color: black;
         }
         th, td {
             border: 1px solid #999;
             padding: 10px;
             text-align: center;
+            background-color: white;
+            color: black;
         }
         th {
             background-color: #f2f2f2;
+            color: black;
         }
-        h1 {
+        h1, h2 {
             color: #333;
+            background-color: white;
+            display: inline-block;
+            padding: 0 10px;
         }
     </style>
 </head>
 <body>
     <h1>Welcome to Calendar</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit">Show Calendar</button>
+    <form method="get" style="margin-bottom: 20px;">
+        <select name="month">
+            {% for num, name in all_months %}
+                <option value="{{ num }}" {% if num == month_num %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="year" value="{{ year }}" min="1900" max="2100" style="width: 80px;">
+        <button type="submit">Go</button>
     </form>
 
     {% if show_calendar %}
-        <h2>{{ month }} {{ year }}</h2>
+        <h2>
+            <a href="?month={{ prev_month }}&year={{ prev_year }}" style="text-decoration:none; font-weight:bold; font-size:1.2em;">&#8592;</a>
+            <span style="margin: 0 15px;">{{ month }} {{ year }}</span>
+            <a href="?month={{ next_month }}&year={{ next_year }}" style="text-decoration:none; font-weight:bold; font-size:1.2em;">&#8594;</a>
+        </h2>
         <div>
             {{ calendar|safe }}
         </div>
