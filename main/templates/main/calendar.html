@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 30px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Calendar</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Show Calendar</button>
+    </form>
+
+    {% if show_calendar %}
+        <h2>{{ month }} {{ year }}</h2>
+        <div>
+            {{ calendar|safe }}
+        </div>
+    {% endif %}
+</body>
+</html>
